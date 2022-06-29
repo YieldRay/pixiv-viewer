@@ -1,0 +1,73 @@
+<template>
+  <nav @click.self="this.isSearchOpen ? (this.isSearchOpen = false) : null">
+    <div class="left">
+      <RoundButton @click="isSidebarOpen = !isSidebarOpen"></RoundButton>
+      <PLogo></PLogo>
+    </div>
+
+    <div class="right">
+      <PSearch :on="isSearchOpen" v-on:toggle="isSearchOpen = true"></PSearch>
+      <UserSpace></UserSpace>
+    </div>
+
+    <PSidebar :on="isSidebarOpen" v-on:toggle="isSidebarOpen = false">
+    </PSidebar>
+  </nav>
+
+  <transition name="fade">
+    <div class="mask" v-if="isSearchOpen" @click="isSearchOpen = false"></div>
+  </transition>
+</template>
+
+<script>
+import PLogo from "./PLogo.vue";
+import RoundButton from "./ToggleButton.vue";
+import PSidebar from "./PSidebar.vue";
+import PSearch from "./PSearch.vue";
+import UserSpace from "./UserSpace.vue";
+
+export default {
+  name: "PNav",
+  data() {
+    return {
+      isSidebarOpen: false,
+      isSearchOpen: false,
+    };
+  },
+  methods: {},
+  props: {},
+  components: {
+    RoundButton,
+    PSidebar,
+    PLogo,
+    PSearch,
+    UserSpace,
+  },
+};
+</script>
+
+<style scoped>
+nav {
+  height: 3.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1vw;
+  position: relative;
+}
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.mask {
+  background: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+@import url("../../assets/transiton.css");
+</style>
