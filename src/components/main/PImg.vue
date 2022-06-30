@@ -9,9 +9,6 @@ export default {
     height: Number,
     gap: Number,
   },
-  data() {
-    return { loaded: false };
-  },
 };
 </script>
 
@@ -22,7 +19,7 @@ export default {
       height: height + 'rem',
       marginRight: gap + 'rem',
     }"
-    :class="{ loading: !loaded, hover: !nohover }"
+    :class="{ hover: !nohover, loading: true }"
     v-bind="$attrs"
     :src="src"
     :alt="alt"

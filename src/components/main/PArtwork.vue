@@ -1,11 +1,7 @@
 <script>
-// import PImg from "./PImg.vue";
-// import PSlider from "./PSlider.vue";
 import PImgList from "./PImgList.vue";
 export default {
   components: {
-    // PImg,
-    // PSlider,
     PImgList,
   },
   created() {
@@ -14,6 +10,7 @@ export default {
       () => this.$route.params,
       async (toParams, previousParams) => {
         console.log(toParams, previousParams);
+        this.data = null; // flush
         this.fetchData(toParams.id);
       }
     );
@@ -27,7 +24,7 @@ export default {
   },
   methods: {
     async fetchData(id) {
-      this.data = null; // flush
+      this.data = null; // re-flush
       this.data = await fetch(`https://pixiv.js.org/ajax/illust/${id}`).then(
         (res) => res.json()
       );
@@ -43,15 +40,12 @@ export default {
 </script>
 
 <template>
-  <main>
+  <div v-if="!data" class="loading" style="width: 100%; height: 100vh"></div>
+  <main v-if="data">
     <div class="flex">
-      <div class="container" :class="{ loading: data === null }">
+      <div class="container">
         <figure>
-          <img
-            :src="proxy(data?.urls?.regular)"
-            nohover
-            :class="{ loading: data === null }"
-          />
+          <img :src="proxy(data?.urls?.regular)" nohover class="loading" />
         </figure>
         <section>
           <figcaption>
@@ -69,12 +63,13 @@ export default {
           </figcaption>
         </section>
       </div>
-      <div class="container" :class="{ loading: data === null }">
+      <!-- 两个container，桌面时flex布局 -->
+      <div class="container">
         <!-- <img :src="proxy(data.profileImageUrl)" :alt="data.userAccount" /> -->
         <h2>
           {{ data.userName }}
         </h2>
-        <button class="btn">JUST A BUTTON</button>
+        <button class="btn">JUST A BUTTON~</button>
         <p style="margin: 1rem; font-size: 0.8rem; font-weight: bolder">
           其他作品
         </p>
@@ -85,20 +80,6 @@ export default {
           :small="true"
           :rate="0.5"
         ></PImgList>
-
-        <!-- <PSlider :height="6" :rate="0.9" :loaded="data">
-        <template v-for="(illust, id) in data.userIllusts" :key="id">
-          <router-link :to="`/artwork/${id}`">
-            <PImg
-              :height="6"
-              :width="6"
-              :gap="0.5"
-              v-if="illust"
-              :src="proxy(illust.url)"
-            ></PImg>
-          </router-link>
-        </template>
-      </PSlider> -->
       </div>
     </div>
     <PImgList
@@ -121,11 +102,8 @@ main {
   margin: 0;
   padding: 0;
 }
+
 @import url("../../assets/loading.css");
-.loading {
-  max-width: 100%;
-  max-height: 100%;
-}
 
 .container {
   margin: 2vh 4vw;
@@ -166,11 +144,12 @@ figure {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  min-height: 20vh;
+  transition: all 0.4s;
 }
 
 figure > img {
   max-height: 100vh;
-  width: auto;
   display: block;
 }
 
