@@ -18,5 +18,10 @@ img {
   width: 100%;
   height: 100%;
   border-radius: 4px;
+  transition: all 0.3s;
+}
+
+img:hover {
+  opacity: 0.8;
 }
 </style>

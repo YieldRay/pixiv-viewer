@@ -59,17 +59,16 @@ export default {
   methods: {
     left() {
       const slider = this.$refs.slider;
+      const move = slider.clientWidth * 0.8;
       slider.scrollBy({
-        left: -slider.clientWidth,
+        left: -move,
         behavior: "smooth",
       });
       // check
       if (slider.scrollWidth > slider.clientWidth) {
-        this.allowLeft = Boolean(
-          slider.scrollLeft - slider.clientWidth > this.DISTANCE
-        );
+        this.allowLeft = Boolean(slider.scrollLeft - move > this.DISTANCE);
         this.allowRight = Boolean(
-          Math.ceil(slider.scrollLeft - slider.clientWidth) <
+          Math.ceil(slider.scrollLeft - move) <
             slider.scrollWidth - slider.clientWidth
         );
       } else {
@@ -78,17 +77,16 @@ export default {
     },
     right() {
       const slider = this.$refs.slider;
+      const move = slider.clientWidth * 0.8;
       slider.scrollBy({
-        left: slider.clientWidth,
+        left: move,
         behavior: "smooth",
       });
       //check
       if (slider.scrollWidth > slider.clientWidth) {
-        this.allowLeft = Boolean(
-          slider.scrollLeft + slider.clientWidth > this.DISTANCE
-        );
+        this.allowLeft = Boolean(slider.scrollLeft + move > this.DISTANCE);
         this.allowRight = Boolean(
-          Math.ceil(slider.scrollLeft + slider.clientWidth) <
+          Math.ceil(slider.scrollLeft + move) <
             slider.scrollWidth - slider.clientWidth
         );
       } else {
