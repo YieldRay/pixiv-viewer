@@ -1,10 +1,12 @@
 // props
 // height, title, subtitle, attr 是api返回数组的键名
-// api:api地址或者数据对象
+// api/attr or object or array
 // small:Boolean 不显示文本
 // noscroll:Boolean 切换为非滚动模式
 // gap rate
 <script>
+import { proxy } from "../../assets/config.js";
+
 import PSlider from "./PSlider.vue";
 import PList from "./PList.vue";
 import PImg from "./PImg.vue";
@@ -17,9 +19,19 @@ export default {
     skeletonStyle() {
       return { width: this.height + "rem", height: this.height + "rem" };
     },
+    arrayData() {
+      if (this.api) return this.data;
+      if (Array.isArray(this.array))
+        return this.array.filter((e) => e && e.url);
+
+      // for object data
+      return Object.values(this.object).filter((e) => e && e.url); // 无需键名
+    },
   },
   props: [
-    "api",
+    "api", //  need fetch
+    "object",
+    "array",
     "title",
     "subtitle",
     "height",
@@ -31,23 +43,15 @@ export default {
     "rate",
   ],
   methods: {
-    proxy(url) {
-      if (!url) return "";
-      return url.replace("/-/", "https://pximg.deno.dev/");
-    },
-    async load() {
-      if (typeof this.api === "string") {
-        this.data = (await fetch(this.api).then((res) => res.json()))[
-          this.attr || "illusts" // 默认键名
-        ].filter((e) => e && e.url);
-        console.log(this.data, this.attr);
-      } else {
-        this.data = Object.values(this.api).filter((e) => e && e.url); // 无需键名
-      }
-    },
+    proxy,
   },
-  mounted() {
-    this.load();
+  async mounted() {
+    if (typeof this.api === "string" && this.api.length > 0) {
+      this.data = (await fetch(this.api).then((res) => res.json()))[
+        this.attr || "illusts" // 默认键名
+      ].filter((e) => e && e.url);
+      console.log(this.data, this.attr); // debug
+    }
   },
 };
 </script>
@@ -60,55 +64,57 @@ export default {
   <div class="body">
     <component
       :is="noscroll ? $options.components.PList : $options.components.PSlider"
-      :loaded="Boolean(data)"
+      :loaded="Boolean(arrayData)"
       :height="height"
       :gap="gap"
       :rate="rate"
     >
-      <template v-if="data">
+      <template v-if="arrayData">
         <!-- 下面的是图片容器 -->
-        <div
-          :class="{ illust: !noscroll }"
-          :style="{ width: height + 'rem' }"
-          v-for="(illust, index) in data"
-          :key="illust.illustId || illust.id"
-        >
-          <template v-if="illust">
-            <router-link :to="`/artwork/${illust.illustId || illust.id}`">
-              <div class="pic" :style="skeletonStyle">
-                <PImg
-                  :src="proxy(illust.url)"
-                  :alt="illust.title"
-                  :width="width"
-                  :height="height"
-                />
-                <span class="rank" v-if="ranking">{{ index + 1 }}</span>
-                <span class="page-count" v-if="illust.pageCount > 1">
-                  <svg viewBox="0 0 9 10" size="9">
-                    <path
-                      d="M8,3 C8.55228475,3 9,3.44771525 9,4 L9,9 C9,9.55228475 8.55228475,10 8,10 L3,10
+
+        <transition-group name="list">
+          <div
+            :class="{ illust: !noscroll }"
+            :style="{ width: height + 'rem' }"
+            v-for="(illust, index) in arrayData"
+            :key="illust.illustId || illust.id"
+          >
+            <template v-if="illust">
+              <router-link :to="`/artwork/${illust.illustId || illust.id}`">
+                <div class="pic" :style="skeletonStyle">
+                  <PImg
+                    :src="proxy(illust.url)"
+                    :alt="illust.title"
+                    :height="height"
+                  />
+                  <span class="rank" v-if="ranking">{{ index + 1 }}</span>
+                  <span class="page-count" v-if="illust.pageCount > 1">
+                    <svg viewBox="0 0 9 10" size="9">
+                      <path
+                        d="M8,3 C8.55228475,3 9,3.44771525 9,4 L9,9 C9,9.55228475 8.55228475,10 8,10 L3,10
     C2.44771525,10 2,9.55228475 2,9 L6,9 C7.1045695,9 8,8.1045695 8,7 L8,3 Z M1,1 L6,1
     C6.55228475,1 7,1.44771525 7,2 L7,7 C7,7.55228475 6.55228475,8 6,8 L1,8 C0.44771525,8
     0,7.55228475 0,7 L0,2 C0,1.44771525 0.44771525,1 1,1 Z"
-                      transform=""
-                    ></path>
-                  </svg>
-                  {{ illust.pageCount }}
-                </span>
+                        transform=""
+                      ></path>
+                    </svg>
+                    {{ illust.pageCount }}
+                  </span>
+                </div>
+              </router-link>
+            </template>
+            <template v-if="!this.small">
+              <div class="title">{{ illust.title }}</div>
+              <div class="user">
+                <img
+                  :src="proxy(illust.profileImg || illust.profileImageUrl)"
+                  :alt="illust.userId"
+                />
+                <span>{{ illust.userName }} </span>
               </div>
-            </router-link>
-          </template>
-          <template v-if="!this.small">
-            <div class="title">{{ illust.title }}</div>
-            <div class="user">
-              <img
-                :src="proxy(illust.profileImg || illust.profileImageUrl)"
-                :alt="illust.userId"
-              />
-              <span>{{ illust.userName }} </span>
-            </div>
-          </template>
-        </div>
+            </template>
+          </div>
+        </transition-group>
       </template>
     </component>
   </div>
