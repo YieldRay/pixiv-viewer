@@ -21,6 +21,8 @@ export default {
 html,
 body {
   margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -28,6 +30,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
 main {
   margin: 2vh 0;
   z-index: 1;

@@ -9,5 +9,6 @@
 <style scoped>
 div {
   min-width: 40vw;
+  max-width: 100%;
 }
 </style>

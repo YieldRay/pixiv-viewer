@@ -1,16 +1,6 @@
 <template>
   <div class="container">
     <input @focus="$emit('toggle')" type="text" placeholder="搜索作品" />
-
-    <transition name="fade">
-      <div class="assosiate" v-if="on">
-        <div class="history">
-          <strong>历史记录</strong>
-          <span>清除历史记录</span>
-        </div>
-        <div class="list"></div>
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -54,22 +44,5 @@ input:hover {
   left: 0.8rem;
   transform: translateY(50%);
 }
-.assosiate {
-  position: absolute;
-  overflow-y: auto;
-  left: 1vw;
-  top: 2.8rem;
-  background: #fff;
-  height: calc(100vh - 5rem);
-  width: 35vw;
-  min-width: 20rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  z-index: 2;
-}
-.history {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem 1rem 1.5rem;
-}
+
 </style>

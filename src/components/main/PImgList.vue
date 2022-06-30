@@ -37,30 +37,34 @@ export default {
     <small> {{ subtitle }} </small>
     <h2>{{ title }}</h2>
   </div>
-
-  <PSlider :loaded="Boolean(data && data[attr || 'illusts'])" :height="height">
-    <template v-if="data && data[attr || 'illusts']">
-      <div
-        class="illust"
-        :style="{ width: height + 'rem' }"
-        v-for="(illust, index) in data[attr || 'illusts']"
-        :key="illust.illustId || illust.id"
-      >
-        <div class="pic" :style="skeletonStyle">
-          <PImg :src="proxy(illust.url)" :alt="illust.title" />
-          <span v-if="ranking">{{ index + 1 }}</span>
+  <div class="body">
+    <PSlider
+      :loaded="Boolean(data && data[attr || 'illusts'])"
+      :height="height"
+    >
+      <template v-if="data && data[attr || 'illusts']">
+        <div
+          class="illust"
+          :style="{ width: height + 'rem' }"
+          v-for="(illust, index) in data[attr || 'illusts']"
+          :key="illust.illustId || illust.id"
+        >
+          <div class="pic" :style="skeletonStyle">
+            <PImg :src="proxy(illust.url)" :alt="illust.title" />
+            <span v-if="ranking">{{ index + 1 }}</span>
+          </div>
+          <div class="title">{{ illust.title }}</div>
+          <div class="user">
+            <img
+              :src="proxy(illust.profileImg || illust.profileImageUrl)"
+              :alt="illust.userName"
+            />
+            <span>{{ illust.userName }} </span>
+          </div>
         </div>
-        <div class="title">{{ illust.title }}</div>
-        <div class="user">
-          <img
-            :src="proxy(illust.profileImg || illust.profileImageUrl)"
-            :alt="illust.userName"
-          />
-          <span>{{ illust.userName }} </span>
-        </div>
-      </div>
-    </template>
-  </PSlider>
+      </template>
+    </PSlider>
+  </div>
 </template>
 
 <style scoped>
@@ -77,13 +81,31 @@ h2 {
   font-weight: bold;
   margin: 0px;
 }
-.head {
-  margin: 0.6rem 3rem;
-}
 
 .illust {
+  margin-right: 1vw;
   display: inline-block;
-  margin: auto 0.7rem;
+}
+/* this!!! */
+.body,
+.head {
+  margin: 1vh 4vw;
+}
+
+.head,
+.illust:first-child {
+  padding-left: 4vw;
+}
+
+@media screen and (max-width: 48rem) {
+  .body,
+  .head {
+    margin: 1vh 2vw;
+  }
+  .head,
+  .illust:first-child {
+    padding-left: 2vw;
+  }
 }
 .pic {
   position: relative;

@@ -35,6 +35,10 @@ button {
   align-items: center;
   justify-content: center;
 }
+svg {
+  fill: currentColor;
+  color: #a1a1a1;
+}
 .on {
   background: rgba(0, 0, 0, 0.05);
 }

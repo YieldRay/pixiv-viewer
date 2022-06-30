@@ -43,6 +43,7 @@ export default {
       allowLeft: false,
       allowRight: false,
       display: true,
+      DISTANCE: 1,
     };
   },
   computed: {
@@ -64,7 +65,9 @@ export default {
       });
       // check
       if (slider.scrollWidth > slider.clientWidth) {
-        this.allowLeft = Boolean(slider.scrollLeft - slider.clientWidth > 0);
+        this.allowLeft = Boolean(
+          slider.scrollLeft - slider.clientWidth > this.DISTANCE
+        );
         this.allowRight = Boolean(
           Math.ceil(slider.scrollLeft - slider.clientWidth) <
             slider.scrollWidth - slider.clientWidth
@@ -81,7 +84,9 @@ export default {
       });
       //check
       if (slider.scrollWidth > slider.clientWidth) {
-        this.allowLeft = Boolean(slider.scrollLeft + slider.clientWidth > 0);
+        this.allowLeft = Boolean(
+          slider.scrollLeft + slider.clientWidth > this.DISTANCE
+        );
         this.allowRight = Boolean(
           Math.ceil(slider.scrollLeft + slider.clientWidth) <
             slider.scrollWidth - slider.clientWidth
@@ -92,7 +97,7 @@ export default {
     },
     check() {
       const slider = this.$refs.slider;
-      this.allowLeft = Boolean(slider.scrollLeft > 1);
+      this.allowLeft = Boolean(slider.scrollLeft > this.DISTANCE);
       this.allowRight = Boolean(
         Math.ceil(slider.scrollLeft) < slider.scrollWidth - slider.clientWidth
       );
@@ -136,7 +141,7 @@ export default {
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
-  margin: auto 2.5rem;
+  margin: auto;
 }
 
 .slider > * {

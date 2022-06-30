@@ -9,11 +9,10 @@
       <PSearch :on="isSearchOpen" v-on:toggle="isSearchOpen = true"></PSearch>
       <UserSpace></UserSpace>
     </div>
-
-    <PSidebar :on="isSidebarOpen" v-on:toggle="isSidebarOpen = false">
-    </PSidebar>
   </nav>
 
+  <PSidebar :on="isSidebarOpen" v-on:toggle="isSidebarOpen = false"> </PSidebar>
+  <PSearchAssosiate :on="isSearchOpen"></PSearchAssosiate>
   <transition name="fade">
     <div class="mask" v-if="isSearchOpen" @click="isSearchOpen = false"></div>
   </transition>
@@ -24,6 +23,7 @@ import PLogo from "./PLogo.vue";
 import RoundButton from "./ToggleButton.vue";
 import PSidebar from "./PSidebar.vue";
 import PSearch from "./PSearch.vue";
+import PSearchAssosiate from "./PSearchAssosiate.vue";
 import UserSpace from "./UserSpace.vue";
 
 export default {
@@ -42,6 +42,7 @@ export default {
     PLogo,
     PSearch,
     UserSpace,
+    PSearchAssosiate,
   },
 };
 </script>
@@ -55,6 +56,10 @@ nav {
   align-items: center;
   padding: 0 1vw;
   position: relative;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 .left,
 .right {
@@ -62,6 +67,7 @@ nav {
   align-items: center;
   gap: 1rem;
 }
+
 .mask {
   background: rgba(0, 0, 0, 0.4);
   position: fixed;

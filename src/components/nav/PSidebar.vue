@@ -37,7 +37,7 @@ export default {
   box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.2);
   background: #fff;
   transition: all 0.3s;
-  z-index: 2;
+  z-index: 3;
 }
 .ltr {
   transform: translateX(0);
