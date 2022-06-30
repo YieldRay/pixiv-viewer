@@ -1,5 +1,6 @@
 // 注意：这个组件的属性 height 将指定为骨架的宽度和高度，单位 rem
 // slide  margin: auto 2.5rem;
+// props: rate 滑动距离*rate 默认0.8
 <template>
   <div
     class="container"
@@ -51,7 +52,13 @@ export default {
       return { width: this.height + "rem", height: this.height + "rem" };
     },
   },
-  props: { height: Number },
+  props: {
+    height: Number,
+    rate: {
+      type: Number,
+      default: 0.8,
+    },
+  },
   mounted() {
     this.check();
     // setInterval(this.check, 500);
@@ -59,7 +66,7 @@ export default {
   methods: {
     left() {
       const slider = this.$refs.slider;
-      const move = slider.clientWidth * 0.8;
+      const move = slider.clientWidth * this.rate; // 0.8
       slider.scrollBy({
         left: -move,
         behavior: "smooth",
@@ -77,7 +84,7 @@ export default {
     },
     right() {
       const slider = this.$refs.slider;
-      const move = slider.clientWidth * 0.8;
+      const move = slider.clientWidth * this.rate; // 0.8
       slider.scrollBy({
         left: move,
         behavior: "smooth",
@@ -106,30 +113,13 @@ export default {
 
 
 <style scoped>
+@import url("../../assets/loading.css");
+
 .loading {
-  --loading-grey: #ededed;
   width: 15rem;
   height: 15rem;
   margin: 1rem;
-  background-color: var(--loading-grey);
-  background: linear-gradient(
-      100deg,
-      rgba(255, 255, 255, 0) 40%,
-      rgba(255, 255, 255, 0.5) 50%,
-      rgba(255, 255, 255, 0) 60%
-    )
-    var(--loading-grey);
-  background-size: 200% 100%;
-  background-position-x: 180%;
-  animation: 1s loading ease-in-out infinite;
 }
-
-@keyframes loading {
-  to {
-    background-position-x: -20%;
-  }
-}
-
 .slider::-webkit-scrollbar {
   width: 0;
 }

@@ -1,11 +1,15 @@
 // props
-// height, api, title, subtitle, attr 是api返回数组的键名
-// ranking:Boolean
+// height, title, subtitle, attr 是api返回数组的键名
+// api:api地址或者数据对象
+// small:Boolean 不显示文本
+// noscroll:Boolean 切换为非滚动模式
+// gap rate
 <script>
 import PSlider from "./PSlider.vue";
+import PList from "./PList.vue";
 import PImg from "./PImg.vue";
 export default {
-  components: { PSlider, PImg },
+  components: { PImg, PSlider, PList },
   data() {
     return { data: null };
   },
@@ -14,16 +18,32 @@ export default {
       return { width: this.height + "rem", height: this.height + "rem" };
     },
   },
-  props: ["api", "title", "subtitle", "height", "attr", "ranking"],
+  props: [
+    "api",
+    "title",
+    "subtitle",
+    "height",
+    "attr",
+    "ranking",
+    "small",
+    "noscroll",
+    "gap",
+    "rate",
+  ],
   methods: {
     proxy(url) {
       if (!url) return "";
       return url.replace("/-/", "https://pximg.deno.dev/");
     },
     async load() {
-      this.data = await fetch(this.api).then((res) => res.json());
-      this.data[this.attr] = this.data[this.attr].filter((e) => e.url);
-      console.log(this.data[this.attr]);
+      if (typeof this.api === "string") {
+        this.data = (await fetch(this.api).then((res) => res.json()))[
+          this.attr || "illusts" // 默认键名
+        ].filter((e) => e && e.url);
+        console.log(this.data, this.attr);
+      } else {
+        this.data = Object.values(this.api).filter((e) => e && e.url); // 无需键名
+      }
     },
   },
   mounted() {
@@ -38,32 +58,59 @@ export default {
     <h2>{{ title }}</h2>
   </div>
   <div class="body">
-    <PSlider
-      :loaded="Boolean(data && data[attr || 'illusts'])"
+    <component
+      :is="noscroll ? $options.components.PList : $options.components.PSlider"
+      :loaded="Boolean(data)"
       :height="height"
+      :gap="gap"
+      :rate="rate"
     >
-      <template v-if="data && data[attr || 'illusts']">
+      <template v-if="data">
+        <!-- 下面的是图片容器 -->
         <div
-          class="illust"
+          :class="{ illust: !noscroll }"
           :style="{ width: height + 'rem' }"
-          v-for="(illust, index) in data[attr || 'illusts']"
+          v-for="(illust, index) in data"
           :key="illust.illustId || illust.id"
         >
-          <div class="pic" :style="skeletonStyle">
-            <PImg :src="proxy(illust.url)" :alt="illust.title" />
-            <span v-if="ranking">{{ index + 1 }}</span>
-          </div>
-          <div class="title">{{ illust.title }}</div>
-          <div class="user">
-            <img
-              :src="proxy(illust.profileImg || illust.profileImageUrl)"
-              :alt="illust.userName"
-            />
-            <span>{{ illust.userName }} </span>
-          </div>
+          <template v-if="illust">
+            <router-link :to="`/artwork/${illust.illustId || illust.id}`">
+              <div class="pic" :style="skeletonStyle">
+                <PImg
+                  :src="proxy(illust.url)"
+                  :alt="illust.title"
+                  :width="width"
+                  :height="height"
+                />
+                <span class="rank" v-if="ranking">{{ index + 1 }}</span>
+                <span class="page-count" v-if="illust.pageCount > 1">
+                  <svg viewBox="0 0 9 10" size="9">
+                    <path
+                      d="M8,3 C8.55228475,3 9,3.44771525 9,4 L9,9 C9,9.55228475 8.55228475,10 8,10 L3,10
+    C2.44771525,10 2,9.55228475 2,9 L6,9 C7.1045695,9 8,8.1045695 8,7 L8,3 Z M1,1 L6,1
+    C6.55228475,1 7,1.44771525 7,2 L7,7 C7,7.55228475 6.55228475,8 6,8 L1,8 C0.44771525,8
+    0,7.55228475 0,7 L0,2 C0,1.44771525 0.44771525,1 1,1 Z"
+                      transform=""
+                    ></path>
+                  </svg>
+                  {{ illust.pageCount }}
+                </span>
+              </div>
+            </router-link>
+          </template>
+          <template v-if="!this.small">
+            <div class="title">{{ illust.title }}</div>
+            <div class="user">
+              <img
+                :src="proxy(illust.profileImg || illust.profileImageUrl)"
+                :alt="illust.userId"
+              />
+              <span>{{ illust.userName }} </span>
+            </div>
+          </template>
         </div>
       </template>
-    </PSlider>
+    </component>
   </div>
 </template>
 
@@ -112,12 +159,16 @@ h2 {
 }
 
 .pic > PImg,
-.pic > span {
+.pic > .rank,
+.pic > .page-count {
   position: absolute;
   top: 0;
-  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.pic > span {
+
+.pic > .rank {
   transform: translate(50%, 50%);
   width: 2rem;
   height: 2rem;
@@ -125,10 +176,30 @@ h2 {
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
+
+.pic > .page-count {
+  top: 0.2rem;
+  right: 0.4rem;
+  width: 2rem;
+  height: 1.25rem;
+  border-radius: 1.25rem;
+  font-size: 50%;
+  background: rgba(0, 0, 0, 0.32);
+  color: #fff;
+  font-weight: bold;
+}
+
+.page-count > svg {
+  stroke: none;
+  fill: currentcolor;
+  width: 9px;
+  line-height: 0;
+  font-size: 0px;
+  vertical-align: middle;
+  padding-right: 2px;
+}
+
 .title,
 .user {
   margin-top: 4px;

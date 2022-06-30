@@ -1,6 +1,13 @@
 <template>
   <div class="container">
-    <input @focus="$emit('toggle')" type="text" placeholder="搜索作品" />
+    <input
+      @focus="$emit('toggle')"
+      type="text"
+      placeholder="搜索作品"
+      v-model="search"
+      @change="change"
+      @keydown.enter="enter"
+    />
   </div>
 </template>
 
@@ -11,6 +18,19 @@ export default {
     on: Boolean,
   },
   emits: ["toggle"],
+  data() {
+    return { search: "" };
+  },
+  methods: {
+    change() {
+      console.log(this.search);
+    },
+    enter() {
+      if (Number(this.search) != null) {
+        this.$router.push("/artwork/" + this.search);
+      }
+    },
+  },
 };
 </script>
 
@@ -24,6 +44,11 @@ input {
   outline: none;
   transition: all 0.5s;
   width: 30vw;
+}
+@media screen and (max-width: 32rem) {
+  input {
+    width: 40vw;
+  }
 }
 input:focus {
   background-color: #ebebeb;
@@ -44,5 +69,4 @@ input:hover {
   left: 0.8rem;
   transform: translateY(50%);
 }
-
 </style>

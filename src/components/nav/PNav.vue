@@ -49,8 +49,8 @@ export default {
 
 <style scoped>
 nav {
-  height: 3.5rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  height: 4rem;
+  /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); */
   display: flex;
   justify-content: space-between;
   align-items: center;

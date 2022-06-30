@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot>未完工，搜索框不可用</slot>
+    <slot>未完工⛏</slot>
   </div>
 </template>
 
@@ -10,5 +10,10 @@
 div {
   min-width: 40vw;
   max-width: 100%;
+}
+@media screen and (max-width: 32rem) {
+  div {
+    min-width: 10vw;
+  }
 }
 </style>

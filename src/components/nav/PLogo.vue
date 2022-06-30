@@ -1,5 +1,7 @@
 <template>
-  <div><img src="../../assets/pixiv.svg" alt="" /></div>
+  <router-link to="/">
+    <div><img src="../../assets/pixiv.svg" alt="" /></div>
+  </router-link>
 </template>
 
 <script>

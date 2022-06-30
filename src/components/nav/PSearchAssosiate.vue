@@ -6,6 +6,7 @@
         <span>清除历史记录</span>
       </div>
       <div class="list"></div>
+      目前仅能查询id，请输入数字
     </div>
   </transition>
 </template>
@@ -31,7 +32,7 @@ export default {
   border-radius: 8px;
   left: 30%;
   width: 35vw;
-  top: 3.2rem;
+  top: 3.6rem;
   z-index: 2;
 }
 @media screen and (max-width: 64rem) {
