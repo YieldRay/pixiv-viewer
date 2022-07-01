@@ -3,10 +3,14 @@
     <div class="assosiate" v-if="on">
       <div class="history">
         <strong>历史记录</strong>
-        <span>清除历史记录</span>
+        <small style="cursor: pointer" @click="clearHistory"
+          >清除历史记录</small
+        >
       </div>
       <div class="list"></div>
-      目前仅能查询id，请输入数字
+      <div style="display: flex; justify-content: center; align-items: center">
+        目前仅能查询id，请输入数字
+      </div>
     </div>
   </transition>
 </template>
@@ -18,6 +22,11 @@ export default {
     on: Boolean,
   },
   emits: ["toggle"],
+  methods: {
+    clearHistory() {
+      window.alert("暂不可用");
+    },
+  },
 };
 </script>
 
@@ -51,6 +60,7 @@ export default {
 .history {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem 1rem 1.5rem;
 }
 </style>

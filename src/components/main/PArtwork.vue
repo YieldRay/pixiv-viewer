@@ -15,6 +15,10 @@ export default {
         this.fetchData(toParams.id);
         this.recommendList = []; // flush
         this.fetchRecommend();
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       }
     );
   },
