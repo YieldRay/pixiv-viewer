@@ -119,8 +119,10 @@ export default {
             <ul v-if="data">
               <li v-for="one in data.tags.tags" :key="one.tag">
                 <template v-if="one">
-                  <span> #{{ one.tag }} </span>
-                  <small>{{ one?.translation?.en }}</small>
+                  <router-link :to="`/search/${one.tag}`">
+                    <span> #{{ one.tag }} </span>
+                    <small>{{ one?.translation?.en }}</small>
+                  </router-link>
                 </template>
               </li>
             </ul>
@@ -265,10 +267,10 @@ li {
   display: inline;
   margin: 0px 12px 0px 0px;
 }
-li > span {
+li span {
   color: rgb(61, 118, 153);
 }
-li > small {
+li small {
   display: inline-block;
   color: rgb(173, 173, 173);
   font-size: 12px;

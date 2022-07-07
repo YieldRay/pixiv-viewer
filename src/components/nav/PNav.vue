@@ -6,13 +6,21 @@
     </div>
 
     <div class="right">
-      <PSearch :on="isSearchOpen" v-on:toggle="isSearchOpen = true"></PSearch>
+      <PSearch
+        :on="isSearchOpen"
+        @toggle="isSearchOpen = true"
+        @search="search"
+      ></PSearch>
       <UserSpace></UserSpace>
     </div>
   </nav>
 
   <PSidebar :on="isSidebarOpen" v-on:toggle="isSidebarOpen = false"> </PSidebar>
-  <PSearchAssosiate :on="isSearchOpen"></PSearchAssosiate>
+  <PSearchAssosiate
+    :on="isSearchOpen"
+    :history="history"
+    @clearHistory="clearHistory"
+  ></PSearchAssosiate>
   <transition name="fade">
     <div class="mask" v-if="isSearchOpen" @click="isSearchOpen = false"></div>
   </transition>
@@ -25,6 +33,7 @@ import PSidebar from "./PSidebar.vue";
 import PSearch from "./PSearch.vue";
 import PSearchAssosiate from "./PSearchAssosiate.vue";
 import UserSpace from "./UserSpace.vue";
+import { storage } from "@/assets/localStorage";
 
 export default {
   name: "PNav",
@@ -32,9 +41,18 @@ export default {
     return {
       isSidebarOpen: false,
       isSearchOpen: false,
+      history: storage.get(),
     };
   },
-  methods: {},
+  methods: {
+    search() {
+      this.history = storage.get();
+    },
+    clearHistory() {
+      storage.clear();
+      this.history = storage.get();
+    },
+  },
   props: {},
   components: {
     RoundButton,

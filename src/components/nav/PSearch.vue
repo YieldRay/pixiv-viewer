@@ -12,12 +12,14 @@
 </template>
 
 <script>
+import { storage } from "../../assets/localStorage.js";
+
 export default {
   name: "PSearch",
   props: {
     on: Boolean,
   },
-  emits: ["toggle"],
+  emits: ["toggle", "search"],
   data() {
     return { search: "" };
   },
@@ -26,8 +28,12 @@ export default {
       console.log(this.search);
     },
     enter() {
-      if (Number(this.search) != null) {
+      storage.push(this.search);
+      this.$emit("search");
+      if (/^\d+$/.test(this.search)) {
         this.$router.push("/artwork/" + this.search);
+      } else {
+        this.$router.push("/search/" + this.search);
       }
     },
   },

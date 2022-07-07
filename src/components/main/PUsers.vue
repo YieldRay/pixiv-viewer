@@ -86,12 +86,14 @@ export default {
   methods: {
     proxy,
     async fetchUser(id) {
+      this.user = null;
       this.user = await fetch(
         `https://pixiv.js.org/ajax/user/${id}?full=1`
       ).then((res) => res.json());
       document.title = this.user.name;
     },
     async fetchArtwork(id) {
+      this.artwork = null;
       this.artwork = await fetch(
         `https://pixiv.js.org/ajax/user/${id}/profile/top`
       ).then((res) => res.json());

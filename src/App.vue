@@ -37,6 +37,7 @@ main {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 .router-link-active {

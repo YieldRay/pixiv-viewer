@@ -3,34 +3,40 @@
     <div class="assosiate" v-if="on">
       <div class="history">
         <strong>历史记录</strong>
-        <small style="cursor: pointer" @click="clearHistory"
+        <small style="cursor: pointer" @click="$emit('clearHistory')"
           >清除历史记录</small
         >
       </div>
-      <div class="list"></div>
+      <div class="list">
+        <ul v-if="history">
+          <transition-group name="list">
+            <li v-for="item in history" :key="item">{{ item }}</li>
+          </transition-group>
+        </ul>
+      </div>
       <div style="display: flex; justify-content: center; align-items: center">
-        目前仅能查询id，请输入数字
+        输入数字时，查询ID；否则，执行普通搜索
       </div>
     </div>
   </transition>
 </template>
 
 <script>
+// import { storage } from "../../assets/localStorage.js";
+
 export default {
   name: "PSearchAssosiate",
   props: {
     on: Boolean,
+    history: Array,
   },
-  emits: ["toggle"],
-  methods: {
-    clearHistory() {
-      window.alert("暂不可用");
-    },
-  },
+  emits: ["toggle", "clearHistory"],
 };
 </script>
 
-<style>
+<style scoped>
+@import url("../../assets/transiton.css");
+
 .assosiate {
   position: absolute;
   overflow-y: auto;
@@ -62,5 +68,20 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1rem 1.5rem;
+}
+
+ul {
+  display: flex;
+  flex-flow: column;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+li {
+  padding: 12px 0 12px 24px;
+  transition: all 0.2s ease 0s;
+}
+li:hover {
+  background: rgba(0, 0, 0, 0.04);
 }
 </style>
