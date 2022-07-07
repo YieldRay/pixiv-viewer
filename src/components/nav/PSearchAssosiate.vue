@@ -10,27 +10,33 @@
       <div class="list">
         <ul v-if="history">
           <transition-group name="list">
-            <li v-for="item in history" :key="item">{{ item }}</li>
+            <li
+              v-for="item in history"
+              :key="item"
+              @click="$emit('search', item)"
+            >
+              {{ item }}
+            </li>
           </transition-group>
         </ul>
       </div>
-      <div style="display: flex; justify-content: center; align-items: center">
+      <small
+        style="display: flex; justify-content: center; align-items: center"
+      >
         输入数字时，查询ID；否则，执行普通搜索
-      </div>
+      </small>
     </div>
   </transition>
 </template>
 
 <script>
-// import { storage } from "../../assets/localStorage.js";
-
 export default {
   name: "PSearchAssosiate",
   props: {
     on: Boolean,
     history: Array,
   },
-  emits: ["toggle", "clearHistory"],
+  emits: ["toggle", "clearHistory", "search"],
 };
 </script>
 

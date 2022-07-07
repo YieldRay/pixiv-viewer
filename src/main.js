@@ -1,15 +1,22 @@
 import { createApp } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import App from "./App.vue";
-document.title = "Pixiv";
 
 import PArtwork from "./components/main/PArtwork.vue";
 import PHome from "./components/main/PHome.vue";
 import PUsers from "./components/main/PUsers.vue";
 import PSearch from "./components/main/PSearch.vue";
 
+document.title = "Pixiv";
+
 const routes = [
-    { path: "/", component: PHome },
+    {
+        path: "/",
+        component: PHome,
+        meta: {
+            title: "Pixiv",
+        },
+    },
     {
         path: "/artwork/:id",
         component: PArtwork,
@@ -27,6 +34,14 @@ const routes = [
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
+    scrollBehavior() {
+        return { top: 0, behavior: "smooth" };
+    },
 });
 
-createApp(App).use(router).mount("#app");
+router.beforeEach((to) => {
+    to.meta.title && (document.title = to.meta.title);
+});
+
+const app = createApp(App);
+app.use(router).mount("#app");

@@ -53,10 +53,6 @@ export default {
         // watch changes of path
         console.log(toParams, previousParams);
         this.fetchData(this.$route.params.search, this.$route.params.page);
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
       }
     );
   },

@@ -15,10 +15,6 @@ export default {
         this.fetchData(toParams.id);
         this.recommendList = []; // flush
         this.fetchRecommend();
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
       }
     );
   },
@@ -43,7 +39,7 @@ export default {
       this.data = await fetch(`https://pixiv.js.org/ajax/illust/${id}`).then(
         (res) => res.json()
       );
-      document.title = this.data.alt;
+      this.data.alt && (document.title = this.data.alt);
     },
     async fetchRecommend() {
       // init
@@ -136,7 +132,7 @@ export default {
           {{ data.userName }}
         </h2>
         <router-link :to="`/users/${data.userId}`">
-          <button class="btn">See more about this user</button>
+          <button class="btn">查看画师详情</button>
         </router-link>
         <p style="margin: 1rem; font-size: 0.8rem; font-weight: bolder">
           其他作品
@@ -144,7 +140,7 @@ export default {
         <PImgList
           :object="data.userIllusts"
           :height="5"
-          :noscroll="false"
+          :noBy="false"
           :small="true"
           :rate="0.5"
         ></PImgList>

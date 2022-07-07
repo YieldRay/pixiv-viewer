@@ -196,6 +196,4 @@ export default {
   border-color: transparent transparent transparent #fff;
   transform: translateX(35%);
 }
-
-/* @import url("../../assets/transiton.css"); */
 </style>

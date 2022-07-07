@@ -29,6 +29,7 @@ export default {
     },
     enter() {
       storage.push(this.search);
+      storage.noRepeat();
       this.$emit("search");
       if (/^\d+$/.test(this.search)) {
         this.$router.push("/artwork/" + this.search);

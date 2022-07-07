@@ -76,6 +76,7 @@ button.active {
   align-items: center;
   justify-content: center;
   gap: 2px;
+  margin: 1rem 0;
 }
 
 .tri-l,

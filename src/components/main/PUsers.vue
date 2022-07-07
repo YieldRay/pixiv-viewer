@@ -63,10 +63,6 @@ export default {
         console.log(toParams, previousParams);
         this.fetchUser(this.$route.params.id);
         this.fetchArtwork(this.$route.params.id);
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
       }
     );
   },
@@ -90,7 +86,7 @@ export default {
       this.user = await fetch(
         `https://pixiv.js.org/ajax/user/${id}?full=1`
       ).then((res) => res.json());
-      document.title = this.user.name;
+      this.user.name && (document.title = this.user.name);
     },
     async fetchArtwork(id) {
       this.artwork = null;

@@ -21,12 +21,19 @@ class Storage {
         return data;
     }
     push(value) {
-        const data = this.get();
-        data.push(value);
-        this.set(data);
+        try {
+            const data = this.get();
+            data.push(value);
+            this.set(data);
+        } catch {
+            this.set([]);
+        }
     }
     clear() {
         localStorage.setItem(this._key, "[]");
+    }
+    noRepeat() {
+        this.set([...new Set(this.get())]);
     }
 }
 

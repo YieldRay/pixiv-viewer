@@ -20,6 +20,7 @@
     :on="isSearchOpen"
     :history="history"
     @clearHistory="clearHistory"
+    @search="searchHistory"
   ></PSearchAssosiate>
   <transition name="fade">
     <div class="mask" v-if="isSearchOpen" @click="isSearchOpen = false"></div>
@@ -51,6 +52,10 @@ export default {
     clearHistory() {
       storage.clear();
       this.history = storage.get();
+    },
+    searchHistory(value) {
+      // ! TODO
+      window.alert(value);
     },
   },
   props: {},
