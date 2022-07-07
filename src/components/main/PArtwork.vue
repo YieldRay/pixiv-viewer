@@ -133,7 +133,9 @@ export default {
         <h2>
           {{ data.userName }}
         </h2>
-        <button class="btn">JUST A BUTTON~</button>
+        <router-link :to="`/users/${data.userId}`">
+          <button class="btn">See more about this user</button>
+        </router-link>
         <p style="margin: 1rem; font-size: 0.8rem; font-weight: bolder">
           其他作品
         </p>

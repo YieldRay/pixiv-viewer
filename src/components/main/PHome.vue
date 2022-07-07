@@ -2,6 +2,9 @@
 import PImgList from "./PImgList.vue";
 export default {
   components: { PImgList },
+  mounted() {
+    document.title = "Pixiv";
+  },
 };
 </script>
 

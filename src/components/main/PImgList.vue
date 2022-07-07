@@ -3,7 +3,7 @@
 // api/attr or object or array
 // small:Boolean 不显示文本
 // noscroll:Boolean 切换为非滚动模式
-// gap rate
+// gap rate hideUser
 <script>
 import { proxy } from "../../assets/config.js";
 
@@ -41,6 +41,7 @@ export default {
     "noscroll",
     "gap",
     "rate",
+    "hideUser",
   ],
   methods: {
     proxy,
@@ -95,7 +96,6 @@ export default {
     C2.44771525,10 2,9.55228475 2,9 L6,9 C7.1045695,9 8,8.1045695 8,7 L8,3 Z M1,1 L6,1
     C6.55228475,1 7,1.44771525 7,2 L7,7 C7,7.55228475 6.55228475,8 6,8 L1,8 C0.44771525,8
     0,7.55228475 0,7 L0,2 C0,1.44771525 0.44771525,1 1,1 Z"
-                        transform=""
                       ></path>
                     </svg>
                     {{ illust.pageCount }}
@@ -105,13 +105,15 @@ export default {
             </template>
             <template v-if="!this.small">
               <div class="title">{{ illust.title }}</div>
-              <div class="user">
-                <img
-                  :src="proxy(illust.profileImg || illust.profileImageUrl)"
-                  :alt="illust.userId"
-                />
-                <span>{{ illust.userName }} </span>
-              </div>
+              <router-link :to="`/users/${illust.userId}`">
+                <div class="user" v-if="!hideUser">
+                  <img
+                    :src="proxy(illust.profileImg || illust.profileImageUrl)"
+                    :alt="illust.userId"
+                  />
+                  <span>{{ illust.userName }} </span>
+                </div>
+              </router-link>
             </template>
           </div>
         </transition-group>

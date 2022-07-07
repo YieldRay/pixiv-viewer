@@ -5,12 +5,17 @@ document.title = "Pixiv";
 
 import PArtwork from "./components/main/PArtwork.vue";
 import PHome from "./components/main/PHome.vue";
+import PUsers from "./components/main/PUsers.vue";
 
 const routes = [
     { path: "/", component: PHome },
     {
         path: "/artwork/:id",
         component: PArtwork,
+    },
+    {
+        path: "/users/:id",
+        component: PUsers,
     },
 ];
 
