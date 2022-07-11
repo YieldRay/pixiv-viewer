@@ -108,9 +108,11 @@ export default {
 }
 .background img {
   width: 100%;
-  max-height: 12rem;
+  max-height: 50vh;
+  /* 我们这里设置为最多半屏高度，不过pixiv上面是大概12rem */
   object-fit: cover;
   object-position: top;
+  /* 背景图片显示位置 */
 }
 .flex {
   display: flex;

@@ -7,8 +7,6 @@ import PHome from "./components/main/PHome.vue";
 import PUsers from "./components/main/PUsers.vue";
 import PSearch from "./components/main/PSearch.vue";
 
-document.title = "Pixiv";
-
 const routes = [
     {
         path: "/",

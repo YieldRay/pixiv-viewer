@@ -10,7 +10,9 @@
         :on="isSearchOpen"
         @toggle="isSearchOpen = true"
         @search="search"
-      ></PSearch>
+        v-model="modelValue"
+      >
+      </PSearch>
       <UserSpace></UserSpace>
     </div>
   </nav>
@@ -21,7 +23,9 @@
     :history="history"
     @clearHistory="clearHistory"
     @search="searchHistory"
-  ></PSearchAssosiate>
+  >
+  </PSearchAssosiate>
+
   <transition name="fade">
     <div class="mask" v-if="isSearchOpen" @click="isSearchOpen = false"></div>
   </transition>
@@ -43,10 +47,13 @@ export default {
       isSidebarOpen: false,
       isSearchOpen: false,
       history: storage.get(),
+      modelValue: "",
     };
   },
   methods: {
     search() {
+      storage.push(this.modelValue);
+      storage.noRepeat();
       this.history = storage.get();
     },
     clearHistory() {
@@ -54,11 +61,9 @@ export default {
       this.history = storage.get();
     },
     searchHistory(value) {
-      // ! TODO
-      window.alert(value);
+      this.modelValue = value;
     },
   },
-  props: {},
   components: {
     RoundButton,
     PSidebar,

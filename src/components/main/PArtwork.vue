@@ -288,4 +288,8 @@ li small {
   display: flex;
   justify-content: center;
 }
+
+main {
+  padding-bottom: 1rem;
+}
 </style>

@@ -4,37 +4,28 @@
       @focus="$emit('toggle')"
       type="text"
       placeholder="搜索作品"
-      v-model="search"
-      @change="change"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
       @keydown.enter="enter"
     />
   </div>
 </template>
 
 <script>
-import { storage } from "../../assets/localStorage.js";
-
 export default {
   name: "PSearch",
   props: {
     on: Boolean,
+    modelValue: [String, Number],
   },
-  emits: ["toggle", "search"],
-  data() {
-    return { search: "" };
-  },
+  emits: ["toggle", "update:modelValue", "search"],
   methods: {
-    change() {
-      console.log(this.search);
-    },
     enter() {
-      storage.push(this.search);
-      storage.noRepeat();
       this.$emit("search");
-      if (/^\d+$/.test(this.search)) {
-        this.$router.push("/artwork/" + this.search);
+      if (/^\d+$/.test(this.modelValue)) {
+        this.$router.push("/artwork/" + this.modelValue);
       } else {
-        this.$router.push("/search/" + this.search);
+        this.$router.push("/search/" + this.modelValue);
       }
     },
   },

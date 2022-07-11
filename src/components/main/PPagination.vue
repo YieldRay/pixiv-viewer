@@ -1,13 +1,13 @@
 <template>
   <div class="pagination">
     <router-link :to="`${url}/${current - 1}`" v-if="current > 1">
-      <button><span class="tri-l"></span></button>
+      <button><span class="go-left"></span></button>
     </router-link>
     <router-link :to="`${url}/${i}`" :key="i" v-for="i in pages">
       <button :class="{ active: current === i }" class="page">{{ i }}</button>
     </router-link>
     <router-link :to="`${url}/${current + 1}`" v-if="current < max">
-      <button><span class="tri-r"></span></button>
+      <button><span class="go-right"></span></button>
     </router-link>
   </div>
 </template>
@@ -22,6 +22,7 @@ export default {
       type: Number,
       default: 7,
     },
+    // TODO
     // 若页面数小于
     // 从 5 页开始出现省略号 1 ... 4 (5) 6 7 8
     // 当前页后面有 3 个按钮
@@ -79,17 +80,23 @@ button.active {
   margin: 1rem 0;
 }
 
-.tri-l,
-.tri-r {
-  width: 0;
-  height: 0;
-  border-color: transparent rgb(128, 128, 128) transparent transparent;
-  border-width: 0.75rem;
-  border-style: solid;
-  transform: translateX(-35%);
+.go-left,
+.go-right {
+  position: relative;
+  box-sizing: border-box;
+  transform: scale(0.75);
 }
-.tri-r {
-  border-color: transparent transparent transparent rgb(128, 128, 128);
-  transform: translateX(35%);
+.go-left:after,
+.go-right:after {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  border-left: 4px solid #000;
+  border-bottom: 4px solid #000;
+  transform: translate(0, -50%) rotate(-135deg);
+}
+.go-left {
+  transform: rotate(180deg) scale(0.75);
 }
 </style>
