@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { proxy } from "../../assets/config.js";
+import { proxy, api } from "../../assets/config.js";
 import PImgList from "./PImgList.vue";
 import PPagination from "./PPagination.vue";
 export default {
@@ -74,7 +74,7 @@ export default {
       if (!page || page < 0) page = 1;
       this.data = null;
       this.data = await fetch(
-        `https://pixiv.js.org/ajax/search/artworks/${search}?p=${page}`
+        api(`/ajax/search/artworks/${search}?p=${page}`)
       ).then((res) => res.json());
     },
   },

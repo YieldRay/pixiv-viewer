@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { proxy } from "../../assets/config.js";
+import { proxy, api } from "../../assets/config.js";
 import PImgList from "./PImgList.vue";
 export default {
   components: {
@@ -83,16 +83,16 @@ export default {
     proxy,
     async fetchUser(id) {
       this.user = null;
-      this.user = await fetch(
-        `https://pixiv.js.org/ajax/user/${id}?full=1`
-      ).then((res) => res.json());
+      this.user = await fetch(api(`/ajax/user/${id}?full=1`)).then((res) =>
+        res.json()
+      );
       this.user.name && (document.title = this.user.name);
     },
     async fetchArtwork(id) {
       this.artwork = null;
-      this.artwork = await fetch(
-        `https://pixiv.js.org/ajax/user/${id}/profile/top`
-      ).then((res) => res.json());
+      this.artwork = await fetch(api(`/ajax/user/${id}/profile/top`)).then(
+        (res) => res.json()
+      );
     },
   },
 };

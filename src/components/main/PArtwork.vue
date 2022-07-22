@@ -1,5 +1,5 @@
 <script>
-import { proxy } from "../../assets/config.js";
+import { proxy, api } from "../../assets/config.js";
 import PImgList from "./PImgList.vue";
 export default {
   components: {
@@ -36,8 +36,8 @@ export default {
   methods: {
     async fetchData(id) {
       this.data = null; // re-flush
-      this.data = await fetch(`https://pixiv.js.org/ajax/illust/${id}`).then(
-        (res) => res.json()
+      this.data = await fetch(api(`/ajax/illust/${id}`)).then((res) =>
+        res.json()
       );
       this.data.alt && (document.title = this.data.alt);
     },
@@ -46,7 +46,7 @@ export default {
       const count = 9; // 一次获取的推荐图片数量
       if (!this.recommendList || this.recommendList.length === 0) {
         const { illusts, nextIds } = await fetch(
-          `https://pixiv.js.org/ajax/illust/${this.$route.params.id}/recommend/init?limit=18`
+          api(`/ajax/illust/${this.$route.params.id}/recommend/init?limit=18`)
         ).then((res) => res.json());
         this.recommendData = illusts;
         this.recommendList = nextIds;
@@ -54,9 +54,9 @@ export default {
       }
       // get more
       const buildURL = (ids) => {
-        let api = "https://pixiv.js.org/ajax/illust/recommend/illusts?";
-        ids.forEach((id) => (api += `illust_ids=${id}&`));
-        return api;
+        let apiAppend = api("/ajax/illust/recommend/illusts?");
+        ids.forEach((id) => (apiAppend += `illust_ids=${id}&`));
+        return apiAppend;
       };
       const ids = this.recommendList.splice(0, count); // pop from top
       const { illusts } = await fetch(buildURL(ids)).then((res) => res.json());
@@ -64,7 +64,7 @@ export default {
     },
     async fetchMore() {
       this.pagesData = await fetch(
-        `https://pixiv.js.org/ajax/illust/${this.$route.params.id}/pages`
+        api(`/ajax/illust/${this.$route.params.id}/pages`)
       ).then((res) => res.json());
     },
     proxy,
@@ -140,7 +140,6 @@ export default {
         <PImgList
           :object="data.userIllusts"
           :height="5"
-          :noBy="false"
           :small="true"
           :rate="0.5"
         ></PImgList>
