@@ -13,13 +13,16 @@
                     <span class="close" @click="isOpen = false"> [关闭] </span>
                 </div>
                 <p>
-                    <a href="https://github.com/YieldRay/pixiv-viewer">source code</a>
+                    <a href="https://github.com/YieldRay/pixiv-viewer">源代码 (Github)</a>
                 </p>
+                <p>仅个人练手项目</p>
                 <p>
                     实现了Pixiv的简单操作，API来自
                     <a href="https://pixiv.js.org/" target="_blank">pixiv.js.org</a>
                     项目
                 </p>
+                <p>遇到部分加载失败时，尝试刷新</p>
+                <p>如非特殊情况，此项目已不再维护</p>
             </div>
         </transition>
     </teleport>
@@ -37,12 +40,12 @@ export default {
 @import url("../../assets/transiton.css");
 
 div {
-    min-width: 40vw;
-    max-width: 100%;
+    min-width: 50vw;
+    max-width: 80vw;
 }
 @media screen and (max-width: 32rem) {
     div {
-        min-width: 10vw;
+        min-width: 75vw;
     }
 }
 
