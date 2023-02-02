@@ -19,12 +19,25 @@
             <li @click="setQuality('regular')">regular</li>
             <li @click="setQuality('original')">original</li>
         </ul>
+
+        <br />
+        <br />
+        <h2>
+            图片代理
+            <br />
+            <small class="pximg">
+                <input v-model="pximg" type="url" /><button @click="setPximg">
+                    确定
+                </button></small
+            >
+        </h2>
     </div>
 </template>
 
 <script>
 import RoundButton from "./ToggleButton.vue";
 import PLogo from "./PLogo.vue";
+import { pximg } from "../../assets/config";
 export default {
     name: "PSidebar",
     props: {
@@ -38,12 +51,17 @@ export default {
     data() {
         return {
             quality: window.localStorage.getItem("quality") || "regular",
+            pximg,
         };
     },
     methods: {
         setQuality(q) {
             window.localStorage.setItem("quality", q);
             this.quality = q;
+            location.reload();
+        },
+        setPximg() {
+            localStorage.setItem("pximg", this.pximg.trim());
             location.reload();
         },
     },
@@ -107,5 +125,25 @@ h2 {
     font-weight: bold;
     color: rgb(133, 133, 133);
 }
+.pximg input,
+.pximg button {
+    border: none;
+    box-sizing: border-box;
+    height: 2em;
+    border-radius: 2px;
+    vertical-align: bottom;
+}
+.pximg input {
+    width: 10em;
+    background-color: #f2f2f2;
+}
+.pximg input:focus {
+    outline: none;
+}
+.pximg button {
+    cursor: pointer;
+    margin-left: 2px;
+}
+
 @import url("../../assets/transiton.css");
 </style>

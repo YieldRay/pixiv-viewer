@@ -36,7 +36,9 @@ export default {
     methods: {
         async fetchData(id) {
             this.data = null; // re-flush
-            this.data = await fetch(api(`/ajax/illust/${id}`)).then((res) => res.json());
+            this.data = await fetch(api(`/ajax/illust/${id}`)).then((res) =>
+                res.json()
+            );
             this.data.alt && (document.title = this.data.alt);
         },
         open(url) {
@@ -47,7 +49,9 @@ export default {
             const count = 9; // 一次获取的推荐图片数量
             if (!this.recommendList || this.recommendList.length === 0) {
                 const { illusts, nextIds } = await fetch(
-                    api(`/ajax/illust/${this.$route.params.id}/recommend/init?limit=18`)
+                    api(
+                        `/ajax/illust/${this.$route.params.id}/recommend/init?limit=18`
+                    )
                 ).then((res) => res.json());
                 this.recommendData = illusts;
                 this.recommendList = nextIds;
@@ -60,11 +64,15 @@ export default {
                 return apiAppend;
             };
             const ids = this.recommendList.splice(0, count); // pop from top
-            const { illusts } = await fetch(buildURL(ids)).then((res) => res.json());
+            const { illusts } = await fetch(buildURL(ids)).then((res) =>
+                res.json()
+            );
             this.recommendData.push(...illusts);
         },
         async fetchMore() {
-            this.pagesData = await fetch(api(`/ajax/illust/${this.$route.params.id}/pages`)).then((res) => res.json());
+            this.pagesData = await fetch(
+                api(`/ajax/illust/${this.$route.params.id}/pages`)
+            ).then((res) => res.json());
         },
         proxy,
     },
@@ -85,11 +93,20 @@ export default {
                         v-if="pagesData.length === 0"
                     />
                     <div class="center">
-                        <button @click="fetchMore" v-if="data.pageCount > 1 && pagesData.length === 0" class="btn">
+                        <button
+                            @click="fetchMore"
+                            v-if="data.pageCount > 1 && pagesData.length === 0"
+                            class="btn"
+                        >
                             加载剩余{{ data.pageCount - 1 }}张图片
                         </button>
 
-                        <button class="btn" @click="open(proxy(data?.urls?.original))">下载原图(第一张)</button>
+                        <button
+                            class="btn"
+                            @click="open(proxy(data?.urls?.original))"
+                        >
+                            下载原图(第一张)
+                        </button>
                     </div>
 
                     <!-- 分页 -->
@@ -100,7 +117,9 @@ export default {
                             :src="proxy(page?.urls?.[quality])"
                             nohover
                             class="loading"
-                            :class="data.width > data.height ? 'fit-x' : 'fit-y'"
+                            :class="
+                                data.width > data.height ? 'fit-x' : 'fit-y'
+                            "
                         />
                     </transition-group>
                 </figure>
@@ -114,7 +133,9 @@ export default {
                                 <template v-if="one">
                                     <router-link :to="`/search/${one.tag}`">
                                         <span> #{{ one.tag }} </span>
-                                        <small>{{ one?.translation?.en }}</small>
+                                        <small>{{
+                                            one?.translation?.en
+                                        }}</small>
                                     </router-link>
                                 </template>
                             </li>
@@ -131,8 +152,15 @@ export default {
                 <router-link :to="`/users/${data.userId}`">
                     <button class="btn">查看画师详情</button>
                 </router-link>
-                <p style="margin: 1rem; font-size: 0.8rem; font-weight: bolder">其他作品</p>
-                <PImgList :object="data.userIllusts" :height="5" :small="true" :rate="0.5"></PImgList>
+                <p style="margin: 1rem; font-size: 0.8rem; font-weight: bolder">
+                    其他作品
+                </p>
+                <PImgList
+                    :object="data.userIllusts"
+                    :height="5"
+                    :small="true"
+                    :rate="0.5"
+                ></PImgList>
             </div>
         </div>
         <template v-if="recommendData">
@@ -145,7 +173,13 @@ export default {
                 title="相关作品"
             ></PImgList>
             <div class="center">
-                <button v-if="recommendData" class="btn" @click="fetchRecommend">加载更多</button>
+                <button
+                    v-if="recommendData"
+                    class="btn"
+                    @click="fetchRecommend"
+                >
+                    加载更多
+                </button>
             </div>
         </template>
     </main>

@@ -1,21 +1,21 @@
 <template>
-  <header>
-    <PNav></PNav>
-  </header>
+    <header>
+        <PNav></PNav>
+    </header>
 
-  <router-view></router-view>
+    <router-view></router-view>
 
-  <footer></footer>
+    <footer></footer>
 </template>
 
 <script>
 import PNav from "./components/nav/PNav.vue";
 
 export default {
-  name: "App",
-  components: {
-    PNav,
-  },
+    name: "App",
+    components: {
+        PNav,
+    },
 };
 </script>
 
@@ -23,24 +23,24 @@ export default {
 html,
 body,
 main {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
 
 .router-link-active {
-  text-decoration: none;
+    text-decoration: none;
 }
 </style>

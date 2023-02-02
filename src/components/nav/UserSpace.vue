@@ -1,7 +1,9 @@
 <template>
     <div>
         <slot>
-            <small @click="isOpen = true" style="cursor: pointer"> ⛏关于 </small>
+            <small @click="isOpen = true" style="cursor: pointer">
+                ⛏关于
+            </small>
         </slot>
     </div>
 
@@ -13,12 +15,16 @@
                     <span class="close" @click="isOpen = false"> [关闭] </span>
                 </div>
                 <p>
-                    <a href="https://github.com/YieldRay/pixiv-viewer">源代码 (Github)</a>
+                    <a href="https://github.com/YieldRay/pixiv-viewer">
+                        源代码 (Github)
+                    </a>
                 </p>
                 <p>仅个人练手项目</p>
                 <p>
                     实现了Pixiv的简单操作，API来自
-                    <a href="https://pixiv.js.org/" target="_blank">pixiv.js.org</a>
+                    <a href="https://pixiv.js.org/" target="_blank"
+                        >pixiv.js.org
+                    </a>
                     项目
                 </p>
                 <p>遇到部分加载失败时，尝试刷新</p>
@@ -43,6 +49,7 @@ div {
     min-width: 50vw;
     max-width: 80vw;
 }
+
 @media screen and (max-width: 32rem) {
     div {
         min-width: 75vw;
@@ -61,6 +68,7 @@ div {
     min-height: 50vh;
     background: #fff;
 }
+
 .popup a {
     color: cadetblue;
     transition: all 0.3s;
