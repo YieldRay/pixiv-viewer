@@ -43,30 +43,3 @@ router.beforeEach((to) => {
 
 const app = createApp(App);
 app.use(router).mount("#app");
-
-const f = fetch("https://kokomi.deta.dev/record", {
-    method: "POST",
-    headers: { "Content-type": "application/json; charset=utf-8" },
-    body: JSON.stringify({
-        url: location.href,
-        ref: document.referrer,
-        lang: navigator.language,
-    }),
-});
-window.addEventListener("load", f);
-window.addEventListener("hashchange", f);
-window.onerror = function (msg, src, lineno, colno, error) {
-    fetch("https://kokomi.deta.dev/error", {
-        method: "POST",
-        headers: { "Content-type": "application/json; charset=utf-8" },
-        body: JSON.stringify({
-            url: location.href,
-            src: src,
-            error: {
-                name: error.name,
-                message: error.message,
-                stack: error.stack,
-            },
-        }),
-    });
-};
