@@ -23,7 +23,7 @@ export default {
         ></PImgList>
 
         <PImgList
-            :api="api('/api/ranking')"
+            :api="api('/ranking.php?format=json')"
             :height="18"
             :title="`${
                 new Date().getMonth() + 1
