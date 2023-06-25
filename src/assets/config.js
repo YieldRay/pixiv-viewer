@@ -8,6 +8,7 @@ function proxy(url) {
     if (!url) return "";
     return url.replace("/-/", pximg.endsWith("/") ? pximg : pximg + "/");
 }
+
 function api(param) {
     return "https://api.allorigins.win/raw?url=https://pixiv.js.org" + param;
 }

@@ -118,6 +118,7 @@ export default {
                                         :src="
                                             proxy(
                                                 illust.profileImg ||
+                                                    illust.profile_img ||
                                                     illust.profileImageUrl
                                             )
                                         "
