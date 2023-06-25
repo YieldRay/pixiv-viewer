@@ -82,7 +82,9 @@ export default {
                     >
                         <template v-if="illust">
                             <router-link
-                                :to="`/artwork/${illust.illustId || illust.id}`"
+                                :to="`/artwork/${
+                                    illust.illust_id || illust.id
+                                }`"
                             >
                                 <div class="pic" :style="skeletonStyle">
                                     <PImg
@@ -112,19 +114,26 @@ export default {
                         </template>
                         <template v-if="!this.small">
                             <div class="title">{{ illust.title }}</div>
-                            <router-link :to="`/users/${illust.userId}`">
+                            <router-link
+                                :to="`/users/${
+                                    illust.user_id || illust.userId
+                                }`"
+                            >
                                 <div class="user" v-if="!hideUser">
                                     <img
                                         :src="
                                             proxy(
-                                                illust.profileImg ||
-                                                    illust.profile_img ||
+                                                illust.profile_img ||
                                                     illust.profileImageUrl
                                             )
                                         "
-                                        :alt="illust.userId"
+                                        :alt="illust.user_id || illust.userId"
                                     />
-                                    <span>{{ illust.userName }} </span>
+                                    <span
+                                        >{{
+                                            illust.user_name || illust.userName
+                                        }}
+                                    </span>
                                 </div>
                             </router-link>
                         </template>
