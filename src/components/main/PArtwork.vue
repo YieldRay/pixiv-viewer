@@ -1,5 +1,5 @@
 <script>
-import { proxy, api } from "../../assets/config.js";
+import { proxy, api, wrapAjax } from "../../assets/config.js";
 import PImgList from "./PImgList.vue";
 export default {
     components: {
@@ -36,8 +36,8 @@ export default {
     methods: {
         async fetchData(id) {
             this.data = null; // re-flush
-            this.data = await fetch(api(`/ajax/illust/${id}`)).then((res) =>
-                res.json()
+            this.data = wrapAjax(
+                await fetch(api(`/ajax/illust/${id}`)).then((res) => res.json())
             );
             this.data.alt && (document.title = this.data.alt);
         },
@@ -48,11 +48,13 @@ export default {
             // init
             const count = 9; // 一次获取的推荐图片数量
             if (!this.recommendList || this.recommendList.length === 0) {
-                const { illusts, nextIds } = await fetch(
-                    api(
-                        `/ajax/illust/${this.$route.params.id}/recommend/init?limit=18`
-                    )
-                ).then((res) => res.json());
+                const { illusts, nextIds } = wrapAjax(
+                    await fetch(
+                        api(
+                            `/ajax/illust/${this.$route.params.id}/recommend/init?limit=18`
+                        )
+                    ).then((res) => res.json())
+                );
                 this.recommendData = illusts;
                 this.recommendList = nextIds;
                 return;
@@ -64,15 +66,17 @@ export default {
                 return apiAppend;
             };
             const ids = this.recommendList.splice(0, count); // pop from top
-            const { illusts } = await fetch(buildURL(ids)).then((res) =>
-                res.json()
+            const { illusts } = wrapAjax(
+                await fetch(buildURL(ids)).then((res) => res.json())
             );
             this.recommendData.push(...illusts);
         },
         async fetchMore() {
-            this.pagesData = await fetch(
-                api(`/ajax/illust/${this.$route.params.id}/pages`)
-            ).then((res) => res.json());
+            this.pagesData = wrapAjax(
+                await fetch(
+                    api(`/ajax/illust/${this.$route.params.id}/pages`)
+                ).then((res) => res.json())
+            );
         },
         proxy,
     },

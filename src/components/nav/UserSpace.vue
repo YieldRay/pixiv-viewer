@@ -19,14 +19,8 @@
                         源代码 (Github)
                     </a>
                 </p>
+                <p><strong>遗弃警告⚠：此项目已被遗弃</strong></p>
                 <p>仅个人练手项目</p>
-                <p>
-                    实现了Pixiv的简单操作，API来自
-                    <a href="https://pixiv.js.org/" target="_blank"
-                        >pixiv.js.org
-                    </a>
-                    项目
-                </p>
                 <p>遇到部分加载失败时，尝试刷新</p>
                 <p>如非特殊情况，此项目已不再维护</p>
             </div>

@@ -45,7 +45,12 @@ export default {
     },
     async mounted() {
         if (typeof this.api === "string" && this.api.length > 0) {
-            this.data = (await fetch(this.api).then((res) => res.json()))[
+            let json = await fetch(this.api).then((res) => res.json());
+            if (json.body) json = json.body;
+            // this is raw pixiv ajax response
+            // any error is ignored
+
+            this.data = json[
                 this.attr || "illusts" // 默认键名
             ].filter((e) => e && e.url);
         }
@@ -78,7 +83,7 @@ export default {
                         :class="{ illust: !noscroll }"
                         :style="{ width: height + 'rem' }"
                         v-for="(illust, index) in arrayData"
-                        :key="illust.illustId || illust.id"
+                        :key="illust.illustId || illust.id || index"
                     >
                         <template v-if="illust">
                             <router-link

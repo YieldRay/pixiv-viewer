@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { proxy, api } from "../../assets/config.js";
+import { proxy, api, wrapAjax } from "../../assets/config.js";
 import PImgList from "./PImgList.vue";
 import PPagination from "./PPagination.vue";
 export default {
@@ -75,9 +75,11 @@ export default {
         async fetchData(search, page = 1) {
             if (!page || page < 0) page = 1;
             this.data = null;
-            this.data = await fetch(
-                api(`/ajax/search/artworks/${search}?p=${page}`)
-            ).then((res) => res.json());
+            this.data = wrapAjax(
+                await fetch(
+                    api(`/ajax/search/artworks/${search}?p=${page}`)
+                ).then((res) => res.json())
+            );
         },
     },
 };

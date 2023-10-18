@@ -6,11 +6,20 @@ if (!pximg.startsWith("http://") && !pximg.startsWith("https://")) {
 
 function proxy(url) {
     if (!url) return "";
-    return url.replace("/-/", pximg.endsWith("/") ? pximg : pximg + "/");
+    const replaceTo = pximg.endsWith("/") ? pximg : pximg + "/";
+    return url
+        .replace("/-/", replaceTo)
+        .replace("https://i.pximg.net/", replaceTo);
 }
 
 function api(param) {
-    return "https://api.allorigins.win/raw?url=https://pixiv.js.org" + param;
+    return "https://hz.488848.xyz/https://www.pixiv.net" + param;
 }
 
-export { proxy, api, pximg };
+// 遗留项目的简单修复
+function wrapAjax(res) {
+    if (res.body) return res.body;
+    return res;
+}
+
+export { proxy, api, pximg, wrapAjax };
