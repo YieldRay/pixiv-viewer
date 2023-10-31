@@ -2,7 +2,7 @@
 object or array // small:Boolean 不显示文本 // noscroll:Boolean 切换为非滚动模式
 // gap rate hideUser
 <script>
-import { proxy } from "../../assets/config.js";
+import { proxy, wrapAjax } from "../../assets/config.js";
 
 import PSlider from "./PSlider.vue";
 import PList from "./PList.vue";
@@ -45,10 +45,9 @@ export default {
     },
     async mounted() {
         if (typeof this.api === "string" && this.api.length > 0) {
-            let json = await fetch(this.api).then((res) => res.json());
-            if (json.body) json = json.body;
-            // this is raw pixiv ajax response
-            // any error is ignored
+            let json = wrapAjax(
+                await fetch(this.api).then((res) => res.json())
+            );
 
             this.data = json[
                 this.attr || "illusts" // 默认键名

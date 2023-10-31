@@ -9,8 +9,8 @@
         "deploy": "surgecli deploy dist pixivviewer.surge.sh"
     },
     "dependencies": {
-        "core-js": "^3.33.0",
-        "vue": "^3.3.4",
+        "core-js": "^3.33.2",
+        "vue": "^3.3.7",
         "vue-router": "^4.2.5"
     },
     "devDependencies": {
@@ -19,8 +19,8 @@
         "@vue/cli-plugin-babel": "~5.0.8",
         "@vue/cli-plugin-eslint": "~5.0.8",
         "@vue/cli-service": "~5.0.8",
-        "eslint": "^8.51.0",
-        "eslint-plugin-vue": "^9.17.0"
+        "eslint": "^8.52.0",
+        "eslint-plugin-vue": "^9.18.1"
     },
     "eslintConfig": {
         "root": true,

@@ -1,7 +1,7 @@
 let pximg = localStorage.getItem("pximg") || "";
 
 if (!pximg.startsWith("http://") && !pximg.startsWith("https://")) {
-    pximg = "https://i.pixiv.re/";
+    pximg = "https://i0.wp.com/i.pixiv.re/";
 }
 
 function proxy(url) {
