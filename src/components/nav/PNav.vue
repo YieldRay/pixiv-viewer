@@ -1,6 +1,6 @@
 <template>
     <nav @click.self="this.isSearchOpen ? (this.isSearchOpen = false) : null">
-        <div class="left">
+        <div class="left" style="margin-right: 1rem;">
             <RoundButton @click="isSidebarOpen = !isSidebarOpen"></RoundButton>
             <PLogo></PLogo>
         </div>
