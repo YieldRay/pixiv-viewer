@@ -9,18 +9,18 @@
         "deploy": "surgecli deploy dist pixivviewer.surge.sh"
     },
     "dependencies": {
-        "core-js": "^3.36.1",
-        "vue": "^3.4.21",
-        "vue-router": "^4.3.0"
+        "core-js": "^3.38.1",
+        "vue": "^3.5.6",
+        "vue-router": "^4.4.5"
     },
     "devDependencies": {
-        "@babel/core": "^7.24.3",
-        "@babel/eslint-parser": "^7.24.1",
+        "@babel/core": "^7.25.2",
+        "@babel/eslint-parser": "^7.25.1",
         "@vue/cli-plugin-babel": "~5.0.8",
         "@vue/cli-plugin-eslint": "~5.0.8",
         "@vue/cli-service": "~5.0.8",
-        "eslint": "^8.57.0",
-        "eslint-plugin-vue": "^9.24.0"
+        "eslint": "^8.57.1",
+        "eslint-plugin-vue": "^9.28.0"
     },
     "eslintConfig": {
         "root": true,
@@ -42,5 +42,5 @@
         "not dead",
         "not ie 11"
     ],
-    "packageManager": "yarn@4.1.1"
+    "packageManager": "yarn@4.5.0"
 }

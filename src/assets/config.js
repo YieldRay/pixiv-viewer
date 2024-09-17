@@ -1,7 +1,7 @@
 let pximg = localStorage.getItem("pximg") || "";
 
 if (!pximg.startsWith("http://") && !pximg.startsWith("https://")) {
-    pximg = "https://i1.wp.com/i.pixiv.re/";
+    pximg = "https://002351b.webp.li/";
 }
 
 function proxy(url) {
@@ -11,7 +11,7 @@ function proxy(url) {
 }
 
 function api(param) {
-    return "https://fetch0.488848.xyz/https://www.pixiv.net" + param;
+    return "https://fetch1.488848.xyz/https://www.pixiv.net" + param;
 }
 
 // 遗留项目的简单修复
