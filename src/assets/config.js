@@ -11,7 +11,7 @@ function proxy(url) {
 }
 
 function api(param) {
-    return "https://fetch2.488848.xyz/https://www.pixiv.net" + param;
+    return "https://fetch4.488848.xyz/https://www.pixiv.net" + param;
 }
 
 // 遗留项目的简单修复
